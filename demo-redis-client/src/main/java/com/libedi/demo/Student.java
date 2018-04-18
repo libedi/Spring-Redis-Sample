@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
  * @author Sangjun, Park
  *
  */
-@RedisHash("students")
+@RedisHash(value = "students", timeToLive = 1L)
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 5723343694201021910L;
