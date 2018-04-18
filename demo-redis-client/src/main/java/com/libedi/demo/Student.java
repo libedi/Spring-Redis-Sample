@@ -2,6 +2,7 @@ package com.libedi.demo;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
  * @author Sangjun, Park
  *
  */
-@RedisHash("Student")
+@RedisHash("students")
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 5723343694201021910L;
@@ -18,6 +19,7 @@ public class Student implements Serializable {
 		MALE, FEMALE;
 	}
 	
+	@Id
 	private String id;
 	private String name;
 	private Gender gender;

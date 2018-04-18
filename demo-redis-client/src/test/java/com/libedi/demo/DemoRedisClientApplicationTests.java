@@ -3,6 +3,7 @@ package com.libedi.demo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
 
@@ -28,6 +29,10 @@ public class DemoRedisClientApplicationTests {
 	public void contextLoads() {
 	}
 	
+	/**
+	 * Test to delete redis entity
+	 * @throws Exception
+	 */
 	@Test
 	public void test00_DeleteStudent() throws Exception {
 		this.studentRepository.findById("ID001").ifPresent(student -> {
@@ -75,6 +80,17 @@ public class DemoRedisClientApplicationTests {
 		assertNotNull("Not found Student entity.", updateStudent);
 		assertEquals("Sinae, Oh", updateStudent.getName());
 		assertEquals(Gender.FEMALE, updateStudent.getGender());
+	}
+	
+	/**
+	 * Test to count redis entity
+	 * @throws Exception
+	 */
+	@Test
+	public void test04_CountStudent() throws Exception {
+		long count = this.studentRepository.count();
+		System.out.println("Student Entity Count : " + count);
+		assertTrue(count > 0);
 	}
 
 }
