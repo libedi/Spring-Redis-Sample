@@ -2,7 +2,6 @@ package com.libedi.demo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
@@ -50,8 +49,8 @@ public class DemoRedisClientApplicationTests {
 	public void test01_SaveStudent() throws Exception {
 		Student student = new Student("ID001", "Sangjun,Park", Gender.MALE, 1);
 		this.studentRepository.save(student);
-		Student retrieveStudent = this.studentRepository.findById("ID001").orElse(null);
-		assertNotNull("Not found Student entity.", retrieveStudent);
+		Optional<Student> retrieveStudent = this.studentRepository.findById("ID001");
+		assertTrue("Not found Student entity.", retrieveStudent.isPresent());
 	}
 	
 	/**
@@ -60,9 +59,11 @@ public class DemoRedisClientApplicationTests {
 	 */
 	@Test
 	public void test02_RetrieveStudent() throws Exception {
-		Student retrieveStudent = this.studentRepository.findById("ID001").orElse(null);
-		assertNotNull("Not found Student entity.", retrieveStudent);
-		assertEquals(Gender.MALE, retrieveStudent.getGender());
+		// RedisHash() 에 TimeToLive 설정시 expired되어서 오류가 발생할 것이다.
+//		Thread.sleep(2000L);
+		Optional<Student> retrieveStudent = this.studentRepository.findById("ID001");
+		assertTrue("Not found Student entity.", retrieveStudent.isPresent());
+		assertEquals(Gender.MALE, retrieveStudent.get().getGender());
 	}
 	
 	/**
@@ -76,10 +77,10 @@ public class DemoRedisClientApplicationTests {
 			student.setGender(Gender.FEMALE);
 			this.studentRepository.save(student);
 		});
-		Student updateStudent = this.studentRepository.findById("ID001").orElse(null);
-		assertNotNull("Not found Student entity.", updateStudent);
-		assertEquals("Sinae, Oh", updateStudent.getName());
-		assertEquals(Gender.FEMALE, updateStudent.getGender());
+		Optional<Student> updateStudent = this.studentRepository.findById("ID001");
+		assertTrue("Not found Student entity.", updateStudent.isPresent());
+		assertEquals("Sinae, Oh", updateStudent.get().getName());
+		assertEquals(Gender.FEMALE, updateStudent.get().getGender());
 	}
 	
 	/**
