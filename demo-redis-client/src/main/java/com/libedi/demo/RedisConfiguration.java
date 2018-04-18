@@ -2,10 +2,9 @@ package com.libedi.demo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 /**
@@ -41,6 +40,16 @@ public class RedisConfiguration {
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
+		template.setConnectionFactory(jedisConnectionFactory());
+		// redis-cli 에서 byte로 표현되어 아래와 같이 설정해준다.
+		template.setKeySerializer(template.getStringSerializer());	// StringRedisSerializer
+		template.setValueSerializer(template.getStringSerializer());	// StringRedisSerializer
+		return template;
+	}
+	
+	@Bean
+	public StringRedisTemplate stringRedisTemplate() {
+		StringRedisTemplate template = new StringRedisTemplate();
 		template.setConnectionFactory(jedisConnectionFactory());
 		return template;
 	}

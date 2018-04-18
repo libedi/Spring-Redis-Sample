@@ -47,7 +47,7 @@ public class DemoRedisClientApplicationTests {
 	 */
 	@Test
 	public void test01_SaveStudent() throws Exception {
-		Student student = new Student("ID001", "Sangjun,Park", Gender.MALE, 1);
+		Student student = new Student("ID001", "Sangjun,Park", Gender.MALE, 1, new Address("Seoul", "12345"));
 		this.studentRepository.save(student);
 		Optional<Student> retrieveStudent = this.studentRepository.findById("ID001");
 		assertTrue("Not found Student entity.", retrieveStudent.isPresent());
@@ -64,6 +64,7 @@ public class DemoRedisClientApplicationTests {
 		Optional<Student> retrieveStudent = this.studentRepository.findById("ID001");
 		assertTrue("Not found Student entity.", retrieveStudent.isPresent());
 		assertEquals(Gender.MALE, retrieveStudent.get().getGender());
+		assertEquals("12345", retrieveStudent.get().getAddress().getZipcode());
 	}
 	
 	/**
@@ -75,12 +76,14 @@ public class DemoRedisClientApplicationTests {
 		 this.studentRepository.findById("ID001").ifPresent(student -> {
 			student.setName("Sinae, Oh");
 			student.setGender(Gender.FEMALE);
+			student.setAddress(new Address("Seoul", "99999"));
 			this.studentRepository.save(student);
 		});
 		Optional<Student> updateStudent = this.studentRepository.findById("ID001");
 		assertTrue("Not found Student entity.", updateStudent.isPresent());
 		assertEquals("Sinae, Oh", updateStudent.get().getName());
 		assertEquals(Gender.FEMALE, updateStudent.get().getGender());
+		assertEquals("99999", updateStudent.get().getAddress().getZipcode());
 	}
 	
 	/**

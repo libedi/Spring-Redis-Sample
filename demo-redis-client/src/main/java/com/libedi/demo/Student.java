@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
  * @author Sangjun, Park
  *
  */
-@RedisHash(value = "students", timeToLive = 1L)
+@RedisHash(value = "students", timeToLive = 10L)
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 5723343694201021910L;
@@ -24,14 +24,15 @@ public class Student implements Serializable {
 	private String name;
 	private Gender gender;
 	private int grade;
+	private Address address;
 	
-	public Student(String id, String name, Gender gender, int grade) {
+	public Student(String id, String name, Gender gender, int grade, Address address) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.grade = grade;
+		this.address = address;
 	}
-	
 	public String getId() {
 		return id;
 	}
@@ -56,5 +57,10 @@ public class Student implements Serializable {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 }
