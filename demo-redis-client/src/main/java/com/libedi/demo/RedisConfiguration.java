@@ -12,11 +12,11 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
  * @author Sangjun, Park
  *
  */
-@Configuration
-@EnableRedisRepositories
+//@Configuration
+//@EnableRedisRepositories
 public class RedisConfiguration {
 	
-	@Bean
+//	@Bean
 	public JedisConnectionFactory jedisConnectionFactory() {
 		JedisConnectionFactory factory = new JedisConnectionFactory();
 //		/*
@@ -37,7 +37,7 @@ public class RedisConfiguration {
 		return factory;
 	}
 	
-	@Bean
+//	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(jedisConnectionFactory());
@@ -47,7 +47,7 @@ public class RedisConfiguration {
 		return template;
 	}
 	
-	@Bean
+//	@Bean
 	public StringRedisTemplate stringRedisTemplate() {
 		StringRedisTemplate template = new StringRedisTemplate();
 		template.setConnectionFactory(jedisConnectionFactory());
